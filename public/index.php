@@ -3,6 +3,9 @@
 define('ROOT',dirname(__FILE__).'/../');     // 项目根目录
 require(ROOT.'vendor/autoload.php');
 
+// 开启session
+session_start();
+
 // 自动加载
 function autoload($class){
     // echo $class;

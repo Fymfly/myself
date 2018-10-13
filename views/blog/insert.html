@@ -77,12 +77,10 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>作者：</th>
-                                <td><input class="common-text" name="user_id" size="50" value="admin" type="text"></td>
-                            </tr>
-                            <tr>
                                 <th><i class="require-red">*</i>缩略图：</th>
-                                <td><input name="smallimg" id="" type="file"><!--<input type="submit" onclick="submitForm('/jscss/admin/design/upload')" value="上传图片"/>--></td>
+                                <td>
+                                    <input class="preview" name="image" id="" type="file" size="80">
+                                </td>
                             </tr>
                             <tr>
                                 <th>内容：</th>
@@ -105,3 +103,5 @@
 </div>
 </body>
 </html>
+<script src="/Js/jquery.min.js"></script>
+<script src="/Js/img_preview.js"></script>
