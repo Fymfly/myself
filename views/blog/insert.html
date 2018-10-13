@@ -64,9 +64,11 @@
                         <tbody><tr>
                             <th width="120"><i class="require-red">*</i>分类：</th>
                             <td>
-                                <select name="colId" id="catid" class="required">
+                                <select name="classify" id="catid" class="required">
                                     <option value="">请选择</option>
-                                    <option value="19">精品界面</option><option value="20">推荐界面</option>
+                                    <?php foreach($data as $v): ?>
+                                        <option  value="<?=$v['id']?>"><?=$v['classify']?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </td>
                         </tr>

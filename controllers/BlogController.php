@@ -6,17 +6,27 @@ use \models\Blog;
 
 class BlogController {
 
+    
+    // 显示添加视图
+    public function insert() {
+        $model = new Blog;
+        $data = $model->classifySQL();
+        view('blog.insert',$data);
+    }
+
+    // 处理添加表单
     public function store() {
         
         $image = $this->image();
         $title = $_POST['title'];
         $content = $_POST['content'];
+        $classify_id = $_POST['classify'];
 
         // var_dump($image);
         // die;
         // var_dump($user_id);
         $blog = new Blog;
-        $blog->add($title,$content,$image);
+        $blog->add($title,$content,$image,$classify_id);
         // 跳转
         redirect('/blog/design');
     }
@@ -74,13 +84,29 @@ class BlogController {
 
     }
 
-    public function insert() {
 
-        view('blog.insert');
-    }
-
+    // 显示修改视图
     public function edit() {
 
-        view('blog.edit');
+        $blogId = $_GET['id'];
+        $model = new Blog;
+        $data = $model->findOne($blogId);
+
+        view('blog.edit',$data);
+    }
+
+    // 修改日志
+    public function update() {
+
+        $blogId = $_GET['id'];
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+
+        // var_dump($blogId);
+        // die;
+
+        $model = new Blog;
+        $model->update($blogId,$title,$content);
+        redirect('/blog/design');
     }
 }

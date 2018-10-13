@@ -101,7 +101,7 @@
                                 <th>点击</th>
                                 <th>发布人</th>
                                 <th>更新时间</th>
-                                <th>评论</th>
+                                <th>分类</th>
                                 <th>操作</th>
                             </tr>
                             <?php foreach($data as $v): ?>
@@ -115,11 +115,12 @@
                                 <td><?=$v['title']?></td>
                                 <td><?=$v['is_audit']?></td>
                                 <td><?=$v['licknum']?></td>
-                                <td><?=$v['user_id']?></td>
+                                <td><?=$v['username']?></td>
                                 <td><?=$v['created_at']?></td>
-                                <td><img src="" width="50" height="50" alt=""></td>
+                                <td><?=$v['classify']?></td>
+                                <!-- <td><img src="" width="50" height="50" alt=""></td> -->
                                 <td>
-                                    <a class="link-update" href="/blog/edit">修改</a>
+                                    <a class="link-update" href="/blog/edit?id=<?=$v['id']?>">修改</a>
                                     <a onclick="return confirm('确定要删除吗？')"  class="link-del" href="/blog/delete?id=<?=$v['id']?>">删除</a>
                                 </td>
                             </tr>
