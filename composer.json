@@ -1,0 +1,6 @@
+{
+    "require": {
+        "swiftmailer/swiftmailer": "^6.1",
+        "predis/predis": "^1.1"
+    }
+}
