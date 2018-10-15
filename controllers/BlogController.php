@@ -3,6 +3,7 @@ namespace controllers;
 
 use PDO;
 use \models\Blog;
+use \libs\Sps;
 
 class BlogController {
 
@@ -59,16 +60,23 @@ class BlogController {
         return $image =  $root . $date . '/' . $name;
     }
 
+    
     public function design() {
 
+        // $model = new Blog;
+        // $data = $model->Dodata();
+        
         $model = new Blog;
-        $data = $model->Dodata();
+        $data = $model->search();
+        // var_dump('<pre>');
+        // var_dump($data);die;
+        
+        // var_dump($search);
+        // die;
 
-        // var_dump($data);
+        
     
-        view('blog.design',[
-            'data' => $data,
-        ]);
+        view('blog.design',$data);
     }
 
     public function delete() {

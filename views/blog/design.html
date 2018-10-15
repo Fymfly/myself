@@ -60,7 +60,7 @@
                 <div class="crumb-list"><i class="icon-font"></i><a href="/index/index">首页</a><span class="crumb-step">&gt;</span><span
                         class="crumb-name">作品管理</span></div>
             </div>
-            <div class="search-wrap">
+            <!-- <div class="search-wrap">
                 <div class="search-content">
                     <form action="#" method="post">
                         <table class="search-tab">
@@ -73,16 +73,22 @@
                                         <option value="20">推荐界面</option>
                                     </select>
                                 </td>
-                                <th width="70">关键字:</th>
-                                <td><input class="common-text" placeholder="关键字" name="keywords" value="" id="" type="text"></td>
-                                <td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td>
                             </tr>
                         </table>
                     </form>
                 </div>
-            </div>
+            </div> -->
             <div class="result-wrap">
-                <form action="design/add" name="myform" id="myform" method="post">
+                <form>
+                    <div>
+                        关键字：
+                        <input type="text" name="keywords" value="<?=@$_GET['keywords']?>"> 发表时间：
+                        <input type="text" name="start_date" value="<?=@$_GET['start_date']?>">
+                        <!-- <input type="text" name="end_date" value="<?=@$_GET['end_date']?>" -->
+                        <input type="submit" value="搜索">
+                    </div>
+                </form>
+                <form action="/design/add" name="myform" id="myform" method="post">
                     <div class="result-title">
                         <div class="result-list">
                             <a href="/blog/insert"><i class="icon-font"></i>新增作品</a>
@@ -94,23 +100,23 @@
                         <table class="result-tab" width="100%">
                             <tr>
                                 <th class="tc" width="5%"><input class="allChoose" name="" type="checkbox"></th>
-                                <th>排序</th>
+                                <!-- <th>排序</th> -->
                                 <th>ID</th>
                                 <th>标题</th>
                                 <th>审核状态</th>
                                 <th>点击</th>
                                 <th>发布人</th>
-                                <th>更新时间</th>
+                                <th>发表时间</th>
                                 <th>分类</th>
                                 <th>操作</th>
                             </tr>
                             <?php foreach($data as $v): ?>
                             <tr>
                                 <td class="tc"><input name="id[]" value="59" type="checkbox"></td>
-                                <td>
+                                <!-- <td>
                                     <input name="ids[]" value="59" type="hidden">
                                     <input class="common-input sort-input" name="ord[]" value="0" type="text">
-                                </td>
+                                </td> -->
                                 <td><?=$v['id']?></td>
                                 <td><?=$v['title']?></td>
                                 <td><?=$v['is_audit']?></td>
@@ -126,11 +132,12 @@
                             </tr>
                             <?php endforeach; ?>
                         </table>
-                        <div class="list-page"> 2 条 1/1 页</div>
+                        <?=$btns?>
                     </div>
                 </form>
             </div>
         </div>
+        
         <!--/main-->
     </div>
 </body>

@@ -57,8 +57,30 @@ $_C = new $fullController;
 $_C->$action();
 
 
-function redirect($url)
+function redirect($url) {
+
+    header('Location:'.$url);
+    exit;
+}
+
+
+//获取当前URL上的参数 并且还能排除掉某些参数
+function getUrlParams($except = [])
+{
+    // ['odby','odway']
+    // 循环删除变量
+    foreach($except as $v)
     {
-        header('Location:'.$url);
-        exit;
+        unset($_GET[$v]);
     }
+
+
+    $str = '';
+    foreach($_GET as $k => $v)
+    {
+        $str .= "$k=$v&";
+    }
+
+    return $str;
+
+}

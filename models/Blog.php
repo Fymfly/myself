@@ -89,4 +89,159 @@ class Blog extends Model{
         ]);
         // var_dump($stmt);
     }
+
+
+    // 搜索日志
+    // public function search(){
+
+    //     // 默认的 where 默认 where 1 代表取出所有数据
+    //      $where = 1;
+    //      $value = [];
+    //      // 如果传了 keywords 参数并且值不为空时添加 where 条件
+    //      if(isset($_GET['keywords']) && $_GET['keywords'])
+    //      {
+    //         $where .= " AND (title like '%{$_GET['keywords']}%' )";
+    //         $value[] ='%'.$_GET['keywords'].'%';
+    //          $value[] ='%'.$_GET['keywords'].'%';
+    //      }
+     
+    //     //  // 发表日期字段的搜索
+    //      if(isset($_GET['start_date']) && $_GET['start_date'])
+    //      {
+    //          $where .= " AND created_at >= '{$_GET['start_date']}'";
+             
+    //      }
+    //     //  if(isset($_GET['end_date']) && $_GET['end_date'])
+    //     //  {
+    //     //      $where .= " AND created_at <= '{$_GET['end_date']}'";
+    //     //  }  
+        
+         
+    //      //分页
+    //     $perpage = 2; // 每页2
+    //     // 接收当前页码（大于等于1的整数）， max：最参数中大的值
+    //     $page = isset($_GET['page']) ? max(1,(int)$_GET['page']) : 1;
+    //     // 计算开始的下标
+    //     // 页码  下标
+    //     // 1 --> 0
+    //     // 2 --> 15
+    //     // 3 --> 30
+    //     // 4 --> 45
+    //     $offset = ($page-1)*$perpage;
+
+    //     // 制作按钮
+    //     // 取出总的记录数
+    //     $sql = "SELECT COUNT(*) FROM blogs WHERE $where";
+    //     $stmt = self::$pdo->prepare($sql);
+    //     $stmt->execute($value);
+    //     $count = $stmt->fetch( \PDO::FETCH_COLUMN );
+    //     // 计算总的页数（ceil：向上取整（天花板）， floor：向下取整（地板））
+    //     $pageCount = ceil( $count / $perpage );
+
+    //     $btns = '';
+    //     for($i=1; $i<=$pageCount; $i++)
+    //     {
+    //         // 先获取之前的参数
+    //         $params = getUrlParams(['page']);
+
+    //         $class = $page==$i ? 'active' : '';
+    //         $btns .= "<a class='$class' href='?{$params}page=$i'> $i </a>";
+            
+    //     }
+        
+    //     $sql = "SELECT b.*,bc.classify,u.username
+    //                 FROM blogs b
+    //                 LEFT JOIN blogs_classify bc on b.classify_id = bc.id
+    //                 LEFT JOIN user u on b.user_id = u.id
+    //                 where $where 
+    //                 limit $offset,$perpage ";
+    //     $stmt = self::$pdo->prepare($sql);
+    //     $stmt->execute([]);
+    //     $data = $stmt->fetchAll( \PDO::FETCH_ASSOC );
+    //      return[
+    //          'data'=>$data,
+    //          'btns'=>$btns,
+    //      ];
+        
+    // }
+
+
+
+    // 搜索日志
+    public function search(){
+    
+        
+        $where = 1;
+
+        // 放预处理对应的值
+        $value = [];
+        //如果传了 keyword 参数并且值不为空添加where 条件
+        if(isset($_GET['keywords']) && $_GET['keywords']){
+
+            $where .= " AND (title like ? OR content like ?)";
+            $value[] ='%'.$_GET['keywords'].'%';
+            $value[] ='%'.$_GET['keywords'].'%';
+            
+        }
+        //日期字段搜索
+        if(isset($_GET['start_date']) && $_GET['start_date']){
+
+            $where .= " AND created_at >= ?";
+            $value[] = $_GET['start_date'];
+        }
+        
+        //分页
+        $perpage = 5; // 每页15
+        // 接收当前页码（大于等于1的整数）， max：最参数中大的值
+        $page = isset($_GET['page']) ? max(1,(int)$_GET['page']) : 1;
+        // 计算开始的下标
+        // 页码  下标
+        // 1 --> 0
+        // 2 --> 15
+        // 3 --> 30
+        // 4 --> 45
+        $offset = ($page-1)*$perpage;
+
+        // 制作按钮
+        // 取出总的记录数
+        $stmt = self::$pdo->prepare("SELECT COUNT(*) FROM blogs WHERE $where");
+        $stmt->execute($value);
+        $count = $stmt->fetch( \PDO::FETCH_COLUMN );
+        // 计算总的页数（ceil：向上取整（天花板）， floor：向下取整（地板））
+        $pageCount = ceil( $count / $perpage );
+
+        $btns = '';
+        for($i=1; $i<=$pageCount; $i++)
+        {
+            // 先获取之前的参数
+            $params = getUrlParams(['page']);
+
+            $class = $page==$i ? 'active' : '';
+            $btns .= "<a class='$class' href='?{$params}page=$i'> $i </a>";
+            
+        }
+
+    
+        /*================= 执行sql ============*/ 
+        // 预处理 SQL
+        $stmt = self::$pdo->prepare("SELECT b.*,bc.classify,u.username
+        FROM blogs b
+        LEFT JOIN blogs_classify bc on b.classify_id = bc.id
+        LEFT JOIN user u on b.user_id = u.id WHERE $where LIMIT $offset,$perpage");  
+        
+        // 执行 SQL
+        $stmt->execute($value);
+
+        // 取数据
+        $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+       
+        
+
+        //加载视图
+       return[
+           'btns'=>$btns,
+           'data'=>$data,
+       ];
+    } 
+
 }
