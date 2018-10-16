@@ -62,15 +62,42 @@
                 <form action="/blog/store" method="post" id="myform" name="myform" enctype="multipart/form-data">
                     <table class="insert-tab" width="100%">
                         <tbody><tr>
-                            <th width="120"><i class="require-red">*</i>分类：</th>
-                            <td>
+                            <!-- <th width="120"><i class="require-red">*</i>分类：</th> -->
+                            <!-- <td>
                                 <select name="classify" id="catid" class="required">
                                     <option value="">请选择</option>
                                     <?php foreach($data as $v): ?>
                                         <option  value="<?=$v['id']?>"><?=$v['classify']?></option>
                                     <?php endforeach; ?>
                                 </select>
-                            </td>
+                            </td> -->
+                            <tr>
+                                <th><i class="require-red">*</i>一级分类：</th>
+                                <td>
+                                    <select name="cat1_id">
+                                        <option value="">选择一级分类</option>
+                                        <?php foreach($data as $v): ?>
+                                            <option value="<?=$v['id']?>"><?=$v['classify']?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <font color="red">*</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>二级分类：</th>
+                                <td>
+                                    <select name="cat2_id"></select>
+                                    <font color="red">*</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>三级分类：</th>
+                                <td>
+                                    <select name="cat3_id"></select>
+                                    <font color="red">*</font>
+                                </td>
+                            </tr>
+                            <tr>
                         </tr>
                             <tr>
                                 <th><i class="require-red">*</i>标题：</th>
@@ -107,3 +134,56 @@
 </html>
 <script src="/Js/jquery.min.js"></script>
 <script src="/Js/img_preview.js"></script>
+
+<script>
+
+    // 三级联动
+    $("select[name=cat1_id]").change(function() {
+
+        // 取出这个分类的id
+        var id = $(this).val()
+        // 如果不为空就执行AJAX
+        if(id!="") {
+            $.ajax({
+                type:"GET",
+                url:"/blog/ajax_get_cat?id="+id,
+                dataType:"json",
+                success:function(data)
+                {
+                    var str = "";
+                    for(var i=0;i<data.length;i++)
+                    {
+                        str += '<option value="'+data[i].id+'">'+data[i].classify+'</option>';
+                    }
+                    // 把拼好的 option 放到第二个下拉框中
+                    $("select[name=cat2_id]").html(str)
+                    // 触发第二个框的 change 事件
+                    $("select[name=cat2_id]").trigger('change');
+                }
+            });
+        }
+    });
+
+    $("select[name=cat2_id]").change(function(){
+        // 取出这个分类的id
+        var id = $(this).val()
+        // 如果不为空就执行AJAX
+        if(id!="") {
+            $.ajax({
+                type:"GET",
+                url:"/blog/ajax_get_cat?id="+id,
+                dataType:"json",
+                success:function(data)
+                {
+                    var str = "";
+                    for(var i=0;i<data.length;i++)
+                    {
+                        str += '<option value="'+data[i].id+'">'+data[i].classify+'</option>';
+                    }
+                    // 把拼好的 option 放到第三个下拉框中
+                    $("select[name=cat3_id]").html(str)
+                }
+            });
+        }
+    });
+</script>

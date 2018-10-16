@@ -3,15 +3,26 @@ namespace controllers;
 
 use PDO;
 use \models\Blog;
-use \libs\Sps;
 
 class BlogController {
 
-    
+    // 三级联动（获取子分类）
+    public function ajax_get_cat() {
+
+        $parent_id = (int)$_GET['id'];
+
+        // 根据这个id查询子分类
+        $model = new \models\Classify;
+        $data = $model->getCat($parent_id);
+        // var_dump($data);die;
+        // 转成 JSON
+        echo json_encode($data);
+    }
+
     // 显示添加视图
     public function insert() {
-        $model = new Blog;
-        $data = $model->classifySQL();
+        $model = new \models\Classify;
+        $data = $model->getCat();
         view('blog.insert',$data);
     }
 

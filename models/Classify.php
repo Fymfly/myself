@@ -12,10 +12,13 @@ class Classify extends Model{
      // 参数：上级分类的ID
      public function getCat($parent_id = 0) {
  
-         return $this->findAll([
-             'where' => "parent_id=$parent_id"
-         ]);
-     }
+        $stmt = self::$pdo->query("SELECT * 
+                                    FROM blogs_classify
+                                     WHERE parent_id=$parent_id 
+                                     ORDER BY CONCAT(path,id,'-') ASC");
+        $stmt->execute();
+        return $data = $stmt->fetchAll( \PDO::FETCH_ASSOC);
+    }
  
  
      // 递归排序
@@ -63,6 +66,7 @@ class Classify extends Model{
     public function index() {
 
         $stmt = self::$pdo->query("SELECT * FROM blogs_classify ORDER BY CONCAT(path,id,'-') ASC");
+        $stmt->execute();
         $data = $stmt->fetchAll( \PDO::FETCH_ASSOC);
 
         return $data;
