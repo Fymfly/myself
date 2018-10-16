@@ -3,7 +3,12 @@
 define('ROOT',dirname(__FILE__).'/../');     // 项目根目录
 require(ROOT.'vendor/autoload.php');
 
-// 开启session
+date_default_timezone_set('PRC');
+
+//设置SESSION 保存
+ini_set('session.save_handler','redis');
+ini_set('session.save_path','tcp://127.0.0.1:6379?database=3');
+//开启session
 session_start();
 
 // 自动加载
@@ -19,22 +24,27 @@ spl_autoload_register('autoload');
 
 // 添加路由: 解析 URL 上的路径：控制器/方法
 // 获取URL上的路径
-if(isset($_SERVER['PATH_INFO'])) {
+if(php_sapi_name()=='cli'){
     
-    $pathInfo = $_SERVER['PATH_INFO'];
-    // var_dump($pathInfo);
+    //得到控制器和方法名
+    $controller = ucfirst($argv[1]).'Controller';
+    $action = $argv[2];
+   
+  }else{
+    if( isset($_SERVER['PATH_INFO']) )
+    {
+        $pathInfo = $_SERVER['PATH_INFO'];
+        // 根据 / 转成数组
+        $pathInfo = explode('/', $pathInfo);
 
-    // 转成数组
-    $pathInfo = explode('/' , $pathInfo);
-
-    // 得到控制器名 和 方法名
-    $controller = ucfirst($pathInfo[1]).'Controller';
-    $action = $pathInfo[2];
-} else {
-
-    // 默认控制器 和 方法
+        // 得到控制器名和方法名 ：
+        $controller = ucfirst($pathInfo[1]) . 'Controller';
+        $action = $pathInfo[2];
+    }else{
+    //默认控制器和方法
     $controller = 'IndexController';
     $action = 'Index';
+  }
 }
     
 // 为控制器添加命名空间
@@ -83,4 +93,19 @@ function getUrlParams($except = [])
 
     return $str;
 
+}
+
+// 读取配置文件(特点：无论调用多次，只包含一次配置文件)
+// 静态局部变量：函数执行结束，也不会销毁，一直存在整个脚本
+// 普通局部变量：函数执行完就销毁
+function config($name) {
+    
+    static $config = null;
+    if($config === null) {
+
+        // 引入配置文件
+        $config = require(ROOT.'config.php');
+    }
+
+    return $config[$name];
 }

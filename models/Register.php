@@ -5,14 +5,23 @@ use PDO;
 
 class Register extends Model {
 
-    public function add($email,$phone,$password) {
+    public function add($email,$password) {
 
-        $stmt = self::$pdo->prepare("INSERT INTO user (email,phone,password) VALUES(?,?,?)");
+        $stmt = self::$pdo->prepare("INSERT INTO user (email,password) VALUES(?,?)");
 
         return $stmt->execute([
             $email,
-            $phone,
+            // $phone,
             $password,
         ]);
+    }
+
+    public function getActiveUsers() {
+
+        $redis = \libs\Redis::getInstance();
+        $data = $redis->get('activeUser');
+
+        // 反序列化(转为数组 true：数组， false：对象)
+        return json_decode($data, true);
     }
 }

@@ -6,7 +6,7 @@ class TestController{
     public function testMail1() {
 
         $mail = new \libs\Mail;
-        $mail->send('测试meil类','测试meil类',['czxy_fym@163.com','玥饼']);
+        $mail->send('测试meil类','测试meil类',['2944065419@qq.com','玥饼']);
     }
 
     // 发邮件
@@ -33,6 +33,30 @@ class TestController{
         var_dump($ret);
     }
 
+    public function register() {
+
+        // 注册成功
+
+        // 发邮件
+
+        // 连接redis
+        $redis = \libs\Redis::getInstance();
+        
+        // 消息队列的信息
+        $data = [
+            'email' => 'czxy_fym@163.com',
+            'title' => '标题',
+            'content' => '内容',
+        ];
+
+        // 数组转成 JSON
+        $data = json_encode($data);
+
+        $redis->lpush('email',$data);
+
+        echo '注册成功';
+    }
+
 
     // 发邮件
     public function mail() {
@@ -43,11 +67,7 @@ class TestController{
         echo '邮件程序已启动';
 
         // 连接redis
-        $redis = new \Predis\Client([
-            'scheme' => 'tcp',
-            'host'   => '127.0.0.1',
-            'port'   => 6379,
-        ]);
+        $redis = \libs\Redis::getInstance();
 
         // 循环监听一个列表
         while(true) {
@@ -59,6 +79,25 @@ class TestController{
             var_dump($data);
             echo '发完邮件，继续等待';
         }
+    }
+
+    public function testRedis() {
+
+        $redis = \libs\Redis::getInstance();
+
+        // $client->set('name','tom');
+        echo $redis->get('name');
+    }
+
+
+    public function testConfig() {
+
+        $re = config('redis');
+        $db = config('db');
+        
+        var_dump('<pre>');
+        var_dump($re);
+        var_dump($db);
     }
 
 }
