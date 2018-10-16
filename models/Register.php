@@ -11,7 +11,7 @@ class Register extends Model {
 
         return $stmt->execute([
             $email,
-            // $phone,
+            // $mobile,
             $password,
         ]);
     }

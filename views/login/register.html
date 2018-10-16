@@ -22,7 +22,8 @@
 						<form action="/register/store" method="post">
 							
 							<div class="form_text_ipt">
-								<input name="phone" type="text" placeholder="手机号/邮箱">
+								<input name="mobile" type="text" placeholder="手机号/邮箱">
+								<button id="btn-send" type="button">发送验证码</button>
 							</div>
 							<div class="ececk_warning"><span>手机号/邮箱不能为空</span></div>
 							<div class="form_text_ipt">
@@ -35,7 +36,7 @@
 
 							<div class="ececk_warning"><span>密码不能为空</span></div>
 							<div class="form_text_ipt">
-								<input name="code" type="text" placeholder="验证码">
+								<input name="mobile_code" type="text" placeholder="验证码">
 							</div>
 							<div class="ececk_warning"><span>验证码不能为空</span></div>
 							
@@ -64,3 +65,24 @@
 		<script type="text/javascript" src="/js/common.js" ></script>
 	</body>
 </html>
+
+<script src="/Js/jquery.min.js"></script>
+<script>
+
+	$("#btn-send").click(function() {
+
+		// 获取手机号码
+		var mobile = $("input[name=mobile]").val();
+
+		// 执行AJAX发到服务器
+		$.ajax({
+			type:"GET",		// GET 方式
+			url:"/register/sendmobilecode?mobile?="+mobile,
+			data:{mobile:mobile},
+			success:function(data) {
+				$("#btn-send").attr('disabled');
+			}
+		});
+	})
+
+</script>

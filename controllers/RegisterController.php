@@ -10,7 +10,7 @@ class RegisterController{
 
         // 1、接收表单
         $email = $_POST['email'];
-        // $phone = $_POST['phone'];
+        // $mobile = $_POST['mobile'];
         $password = md5($_POST['password']);
 
         // 生成激活码(随机的字符串)
@@ -128,6 +128,30 @@ class RegisterController{
             var_dump($data);
             echo '发完邮件，继续等待';
         }
+    }
+
+
+    // 发送短信验证
+    public function sendmobilecode() {
+
+        // 生成6位随机数
+        $code = rand(10000,90000);
+
+
+         // 发短信
+         $config = [
+            'accessKeyId'    => 'LTAIfGI6uvRzJ1gJ',
+            'accessKeySecret' => '8sJjVNXak3PqlloVr2LoReaqKpGMm4',
+          ];  
+          $client  = new Client($config);
+          $sendSms = new SendSms;
+          $sendSms->setPhoneNumbers($req->mobile);
+          $sendSms->setSignName('全栈1SNS项目');
+          $sendSms->setTemplateCode('SMS_128890229');
+          $sendSms->setTemplateParam(['code' => $code ]);
+
+          // 发送
+          $client->execute($sendSms);
     }
 
     // 显示表单

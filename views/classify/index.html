@@ -57,28 +57,9 @@
         <div class="main-wrap">
 
             <div class="crumb-wrap">
-                <div class="crumb-list"><i class="icon-font"></i><a href="/index/index">首页</a>
-                    <span class="crumb-step">&gt;</span>
-                    <span class="crumb-name">作品管理</span></div>
+                <div class="crumb-list"><i class="icon-font"></i><a href="/index/index">首页</a><span class="crumb-step">&gt;</span><span
+                        class="crumb-name">分类管理</span></div>
             </div>
-            <!-- <div class="search-wrap">
-                <div class="search-content">
-                    <form action="#" method="post">
-                        <table class="search-tab">
-                            <tr>
-                                <th width="120">选择分类:</th>
-                                <td>
-                                    <select name="search-sort" id="">
-                                        <option value="">全部</option>
-                                        <option value="19">精品界面</option>
-                                        <option value="20">推荐界面</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
-            </div> -->
             <div class="result-wrap">
                 <form>
                     <div>
@@ -104,12 +85,9 @@
                                 <th class="tc" width="5%"><input class="allChoose" name="" type="checkbox"></th>
                                 <!-- <th>排序</th> -->
                                 <th>ID</th>
-                                <th>标题</th>
-                                <th>审核状态</th>
-                                <th>点击</th>
-                                <th>发布人</th>
-                                <th>发表时间</th>
-                                <th>分类</th>
+                                <th>分类名称</th>
+                                <th>上级id</th>
+                                <th>所有上级分类的ID</th>
                                 <th>操作</th>
                             </tr>
                             <?php foreach($data as $v): ?>
@@ -120,12 +98,9 @@
                                     <input class="common-input sort-input" name="ord[]" value="0" type="text">
                                 </td> -->
                                 <td><?=$v['id']?></td>
-                                <td><?=$v['title']?></td>
-                                <td><?=$v['is_audit']?></td>
-                                <td><?=$v['licknum']?></td>
-                                <td><?=$v['username']?></td>
-                                <td><?=$v['created_at']?></td>
-                                <td><?=$v['classify']?></td>
+                                <td><?= str_repeat('&nbsp;', 8*(count(explode('-',$v['path']))-2)) . $v['classify'] ?></td>
+                                <td><?=$v['parent_id']?></td>
+                                <td><?=$v['path']?></td>
                                 <!-- <td><img src="" width="50" height="50" alt=""></td> -->
                                 <td>
                                     <a class="link-update" href="/blog/edit?id=<?=$v['id']?>">修改</a>
@@ -134,7 +109,7 @@
                             </tr>
                             <?php endforeach; ?>
                         </table>
-                        <?=$btns?>
+                        <!-- <?=$btns?> -->
                     </div>
                 </form>
             </div>
