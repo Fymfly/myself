@@ -28,8 +28,10 @@ class BlogController {
 
     // 处理添加表单
     public function store() {
-        
-        $image = $this->image();
+        // $image = $_FILES['image'];
+        $model = new Blog;
+        $image = $model->image();
+        // $image = $this->image();
         $title = $_POST['title'];
         $content = $_POST['content'];
         $classify_id = $_POST['classify'];
@@ -43,33 +45,37 @@ class BlogController {
         redirect('/blog/design');
     }
 
-    public function image() {
+    // 上传图片
+    // public function image() {
 
-        $root = ROOT.'uploads/';
-        $date = date('Ymd');
-        // 今天日期
+    //     $root = ROOT.'uploads/';
+    //     $date = date('Ymd');
+    //     // 今天日期
         
-        // 如果没有这个目录就创建目录
-        if(!is_dir($root . $date)) {
+    //     // 如果没有这个目录就创建目录
+    //     if(!is_dir($root . $date)) {
 
-            // 创建目录
-            mkdir($root.$date , 0777,true);
-        }
+    //         // 创建目录
+    //         mkdir($root.$date , 0777,true);
+    //     }
 
-        // 生成唯一的名字
-        $name = md5( time() . rand(1,9999) );   // 32 位字符串
+    //     // 生成唯一的名字
+    //     $name = md5( time() . rand(1,9999) );   // 32 位字符串
 
-        // 先取出原来这个图片的后缀
-        // strrchr：从最后某一个字符开始截取到最后
-        $ext = strrchr($_FILES['image']['name'],'.');
+    //     // 先取出原来这个图片的后缀
+    //     // strrchr：从最后某一个字符开始截取到最后
+    //     $ext = strrchr($_FILES['image']['name'],'.');
 
-        $name = $name . $ext;
+    //     $name = $name . $ext;
 
-        // 移动图片
-        move_uploaded_file($_FILES['image']['tmp_name'] , $root . $date . '/' . $name);
+    //     // 移动图片
+    //     move_uploaded_file($_FILES['image']['tmp_name'] , $root . $date . '/' . $name);
 
-        return $image =  $root . $date . '/' . $name;
-    }
+    //     return $image =  $root . $date . '/' . $name;
+
+    //     echo $image;
+    //     die;
+    // }
 
     
     public function design() {

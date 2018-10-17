@@ -35,7 +35,7 @@
                 <li>
                     <a href="#"><i class="icon-font">&#xe003;</i>常用操作</a>
                     <ul class="sub-menu">
-                        <li><a href="/blog/design"><i class="icon-font">&#xe008;</i>作品管理</a></li>
+                        <li><a href="/blog/design"><i class="icon-font">&#xe008;</i>图片管理</a></li>
                         <li><a href="/classify/index"><i class="icon-font">&#xe008;</i>分类管理</a></li>
                         <li><a href="/tupian/index"><i class="icon-font">&#xe008;</i>图片管理</a></li>
                     </ul>
@@ -60,38 +60,18 @@
         </div>
         <div class="result-wrap">
             <div class="result-content">
-                <form action="/blog/update?id=<?=$_GET['id']?>" method="post" id="myform" name="myform" enctype="multipart/form-data">
+                <form action="/tupian/uploadall" method="post" id="myform" name="myform" enctype="multipart/form-data">
                     <table class="insert-tab" width="100%">
-                        <tbody><tr>
-                            <th width="120"><i class="require-red">*</i>分类：</th>
-                            <!-- <td>
-                                <select name="classify" id="catid" class="required">
-                                    <option value="">请选择</option>
-                                        <option  value="<?=$v['id']?>"><?=$data['classify']?></option>
-                                </select>
-                            </td> -->
-                        </tr>
+                        <tbody>
                             <tr>
-                                <th><i class="require-red">*</i>标题：</th>
-                                <td>
-                                    <input class="common-text required" id="title" name="title" size="50" value="<?=$data['title']?>" type="text">
-                                </td>
-                            </tr>
-                            <!-- <tr>
                                 <th><i class="require-red">*</i>缩略图：</th>
                                 <td>
-                                    <input class="preview" value="<?=$data['image']?>" name="image" id="" type="file" size="80">
-                                </td>
-                            </tr> -->
-                            <tr>
-                                <th>内容：</th>
-                                <td><textarea value="" name="content" class="common-textarea" id="content" cols="30" style="width: 98%;" rows="10"><?=$data['content']?></textarea></td>
-                            </tr>
-                            <tr>
-                                <th></th>
-                                <td>
-                                    <input value="提交" type="submit">
-                                    <input value="返回" type="button">
+                                    <input class="preview" name="image[]" multiple="multiple" id="" type="file" size="80">
+                                    <!-- <input class="preview" name="image[]" id="" type="file" size="80">
+                                    <input class="preview" name="image[]" id="" type="file" size="80">
+                                    <input class="preview" name="image[]" id="" type="file" size="80">
+                                    <input class="preview" name="image[]" id="" type="file" size="80"> -->
+                                    <input type="submit" value="上传">
                                 </td>
                             </tr>
                         </tbody></table>
