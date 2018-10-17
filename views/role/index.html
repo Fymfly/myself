@@ -94,9 +94,8 @@
                                 <th class="tc" width="5%"><input class="allChoose" name="" type="checkbox"></th>
                                 <!-- <th>排序</th> -->
                                 <th>ID</th>
-                                <th>分类名称</th>
-                                <th>上级id</th>
-                                <th>所有上级分类的ID</th>
+                                <th>角色名称</th>
+                                <th>权限列表</th>
                                 <th>操作</th>
                             </tr>
                             <?php foreach($data as $v): ?>
@@ -107,7 +106,6 @@
                                     <input class="common-input sort-input" name="ord[]" value="0" type="text">
                                 </td> -->
                                 <td><?=$v['id']?></td>
-                                <td><?= str_repeat('&nbsp;', 8*(count(explode('-',$v['path']))-2)) . $v['classify'] ?></td>
                                 <td><?=$v['parent_id']?></td>
                                 <td><?=$v['path']?></td>
                                 <!-- <td><img src="" width="50" height="50" alt=""></td> -->
