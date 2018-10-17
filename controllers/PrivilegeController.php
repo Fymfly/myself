@@ -5,6 +5,8 @@ class PrivilegeController {
 
     public function index() {
 
-        view('privilege.index');
+        $model = new \models\Privilege;
+        $data = $model->index();
+        view('privilege.index',$data);
     }
 }

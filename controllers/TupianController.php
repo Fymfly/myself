@@ -54,11 +54,6 @@ class TupianController {
           }
          
           
-       
-       
-        
-
-     
     }
 
     // 上传图片

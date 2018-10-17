@@ -5,6 +5,9 @@ class AdminController {
 
     public function index() {
 
-        view('admin.index');
+        $model = new \models\Admin;
+        $data = $model->index();
+
+        view('admin.index',$data);
     }
 }
