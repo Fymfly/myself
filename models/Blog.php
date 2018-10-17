@@ -174,7 +174,7 @@ class Blog extends Model{
      // 上传图片
      public function image() {
 
-        $root = ROOT.'public/uploads/';
+        $root = 'public/uploads/';
         $date = date('Ymd');
         // 今天日期
         

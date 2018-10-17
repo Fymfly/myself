@@ -7,18 +7,27 @@ class TupianController {
 
     // 显示图片视图
     public function index() {
+        $model = new \models\Tupian;
+        $data = $model->index();
 
-        view('tupian.index');
+        view('tupian.index',$data);
     }
 
+    // 显示上传图片视图
+    public function create() {
+
+        view('tupian.create');
+    }
+
+    // 上传多张图片
     public function uploadall(){
 
-        $image = $_FILES['image'];
+          $image = $_FILES['image'];
 
         
-       // 创建目录
-       $root = ROOT.'public/uploads/';
-       //    var_dump($root);
+          // 创建目录
+          $root = '/public/uploads/';
+          //    var_dump($root);
            
           // 今天日期
           $date = date('Ymd');
@@ -53,6 +62,7 @@ class TupianController {
             
           }
          
+          redirect('/tupian/index');
           
     }
 
@@ -61,8 +71,8 @@ class TupianController {
 
         $image = $_FILES['image'];
         echo '<pre>';
-        var_dump(is_dir(ROOT . 'public/uploads/album'));
-        var_dump(ROOT . 'public/uploads/album/');
+        // var_dump(is_dir(ROOT . 'public/uploads/album'));
+        // var_dump(ROOT . 'public/uploads/album/');
         // die;
         // 打开这个图片     并生成缩略图
         $img = Image::make($image['tmp_name']);

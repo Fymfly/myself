@@ -106,7 +106,10 @@
                                     <input class="common-input sort-input" name="ord[]" value="0" type="text">
                                 </td> -->
                                 <td><?=$v['id']?></td>
-                                <td><?=$v['pri_name']?></td>
+                                <td>
+                                    <?=str_repeat('&nbsp;', $v['level']*8)?>
+                                    <?=$v['pri_name']?> <br>
+                                </td>
                                 <td><?=$v['parent_id']?></td>
                                 <!-- <td><img src="" width="50" height="50" alt=""></td> -->
                                 <td>
