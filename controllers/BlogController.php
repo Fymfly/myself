@@ -4,7 +4,7 @@ namespace controllers;
 use PDO;
 use \models\Blog;
 
-class BlogController {
+class BlogController extends BaseController{
 
     // 三级联动（获取子分类）
     public function ajax_get_cat() {

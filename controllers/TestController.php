@@ -1,7 +1,7 @@
 <?php
 namespace controllers;
 
-class TestController{
+class TestController extends BaseController{
 
     public function testMail1() {
 

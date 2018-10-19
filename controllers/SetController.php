@@ -1,7 +1,7 @@
 <?php
 namespace controllers;
 
-class SetController {
+class SetController extends BaseController{
 
     public function system() {
 

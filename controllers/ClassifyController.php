@@ -1,7 +1,7 @@
 <?php
 namespace controllers;
 
-class ClassifyController {
+class ClassifyController extends BaseController{
 
     // 显示视图
     public function index() {

@@ -1,7 +1,7 @@
 <?php
 namespace controllers;
 
-class UploadController {
+class UploadController extends BaseController{
 
     public function upload() {
 

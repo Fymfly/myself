@@ -7,7 +7,7 @@ class Register extends Model {
 
     public function add($email,$password) {
 
-        $stmt = self::$pdo->prepare("INSERT INTO user (email,password) VALUES(?,?)");
+        $stmt = self::$pdo->prepare("INSERT INTO admin (email,password) VALUES(?,?)");
 
         return $stmt->execute([
             $email,

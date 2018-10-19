@@ -3,7 +3,7 @@ namespace controllers;
 
 use models\User;
 
-class UserController {
+class UserController extends BaseController{
 
     public function hello() {
 

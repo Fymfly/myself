@@ -5,6 +5,12 @@ use models\Login;
 
 class LoginController {
 
+    public function test() {
+
+        $moedel = new login;
+        $moedel->getUalPath(2);
+    }
+
     public function login() {
 
         view('login.index');
@@ -15,8 +21,10 @@ class LoginController {
         $username = $_POST['username'];
         $password = md5($_POST['password']);
         
+        
         $user = new Login;
         
+        // var_dump($username,$password);
         if($user->login($username,$password)) {
             // echo 'sdf';
             redirect('/');
@@ -31,6 +39,6 @@ class LoginController {
     public function logout() {
 
         $_SESSION = [];
-        die('退出成功');
+        redirect('/login/login');
     }
 }

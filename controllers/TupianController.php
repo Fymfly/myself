@@ -3,7 +3,7 @@ namespace controllers;
 
 use Intervention\Image\ImageManagerStatic as Image;
 
-class TupianController {
+class TupianController extends BaseController{
 
     // 显示图片视图
     public function index() {

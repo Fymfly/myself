@@ -98,9 +98,9 @@ class RegisterController{
             var_dump($data);
             // 插入到数据库
             $user = new Register;
-            var_dump('dags');
+            // var_dump('dags');
             $user->add($data['email'], $data['password']);
-            // die("激活成功，您可以登录了");
+            die("激活成功，您可以登录了");
         } else {
 
             die('激活码无效');

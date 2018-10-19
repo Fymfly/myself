@@ -3,7 +3,7 @@ namespace controllers;
 
 use libs\Mail;
 
-class MailController {
+class MailController extends BaseController{
 
     public function send() {
 
